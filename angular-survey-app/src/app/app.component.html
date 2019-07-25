@@ -1,0 +1,46 @@
+<div *ngIf="surveyData">
+    <form [formGroup]="surveyForm">
+        <h4>{{surveyData[0].qtext}}</h4>
+        <span>{{surveyData[1].qtext}}</span>
+        <ul>
+            <li *ngFor="let gend of surveyData[1].rows;let i=index">
+                <input type="radio" [value]="gend" formControlName="gender"> {{gend}}
+            </li>
+        </ul>
+        <span>{{surveyData[2].qtext}}</span>
+        <ul>
+            <li *ngFor="let age of surveyData[2].rows;let j=index">
+                <input type="radio" [value]="age" formControlName="ages"> {{age}}
+            </li>
+        </ul>
+        <span>{{surveyData[3].qtext}}</span>
+        <div [formGroup]="surveyForm.controls['checkboxes']">
+            <ul>
+                <li *ngFor="let item of items">
+                    <input type="checkbox" [formControlName]="item" (change)="updateSelection(item)">
+                    <span>{{ item }}</span>
+                </li>
+            </ul>
+        </div>
+        <span>{{surveyData[4].qtext}}</span>
+        <table [formGroup]="surveyForm.controls['favourites']">
+            <thead>
+                <th></th>
+                <th *ngFor="let head of favouritesData.cols">
+                    {{head}}
+                </th>
+            </thead>
+            <tbody>
+                <tr *ngFor="let row of favouritesData.rows">
+                    <td>{{row}}</td>
+                    <td *ngFor="let colItem of favouritesData.cols; let i = index">
+                        <input id="radio-item-{{i}}" type="radio" [value]="colItem" [name]="row" [formControlName]="row" />
+                        <label for="radio-item-{{i}}" class="radio-label"></label>
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+        <br/>
+        <span>{{surveyData[5].qtext}}</span>
+    </form>
+</div>
